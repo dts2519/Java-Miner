@@ -1,3 +1,5 @@
+//This window contains the player's inventory.
+
 package actualminer;
 
 import java.awt.Font;
@@ -42,7 +44,6 @@ public class mineInventory extends JFrame
     ImageIcon pickaxe = new ImageIcon(getClass().getResource("Pickaxe.PNG")); 
     ImageIcon pickaxeD = new ImageIcon(getClass().getResource("DiamondPickaxe.PNG"));
     ImageIcon pickaxeA = new ImageIcon(getClass().getResource("AubruniumPickaxe.PNG"));
-    //Shhhh
     ImageIcon pickaxeM = new ImageIcon(getClass().getResource("MegaAubruniumPickaxe.PNG"));
     
     public mineInventory()
@@ -50,7 +51,7 @@ public class mineInventory extends JFrame
         super("Inventory"); //Title of the window
         JPanel p = new JPanel();
         
-        p.setLayout(null);
+        p.setLayout(null); //Allows for manual placement of each element
         getContentPane().add(p); //Adds the panel to the window (all things are installed on the panel)
         
         title.setFont(new Font("Sans Serif", Font.PLAIN, 22));
@@ -173,16 +174,16 @@ public class mineInventory extends JFrame
         close.setBounds(220, 825, 100, 50);
         p.add(close);
         
-        invHandlerClass handoraa2 = new invHandlerClass();
-        update.addActionListener(handoraa2);
-        close.addActionListener(handoraa2);
+        invHandlerClass handler2 = new invHandlerClass();
+        update.addActionListener(handler2);
+        close.addActionListener(handler2);
     }
     
     private class invHandlerClass implements ActionListener
     {
-        public void actionPerformed(ActionEvent ebento)
+        public void actionPerformed(ActionEvent e)
         {
-            if (ebento.getSource() == update)
+            if (e.getSource() == update) //Updates the totals in case of some unforeseen change
             {
                 amount5.setText("" + mineMan.getCoal());
                 amount6.setText("" + mineMan.getCopper());
@@ -192,7 +193,7 @@ public class mineInventory extends JFrame
                 amount10.setText("" + mineMan.getDiamond());
                 amount11.setText("" + mineMan.getAub());
                 
-                if (mineMan.getMega() > 0)
+                if (mineMan.getMega() > 0) //Only visible if the player possesses at least one unit of mega aubrunium
                 {
                     display12.setText("Mega Aubrunium Ore");
                     amount12.setText("" + mineMan.getMega());
@@ -217,7 +218,6 @@ public class mineInventory extends JFrame
                         displayPickaxe.setIcon(pickaxeA);
                         break;
                     }
-                    //Shhhh
                     case 4:
                     {
                         displayPickaxe.setIcon(pickaxeM);
@@ -225,7 +225,7 @@ public class mineInventory extends JFrame
                     }
                 }
             }
-            if (ebento.getSource() == close)
+            if (e.getSource() == close) //Closes the inventory and re-enables the button in the main window
             {
                 mineMan.inventory.setEnabled(true);
                 dispose();            
