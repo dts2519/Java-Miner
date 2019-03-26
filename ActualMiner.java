@@ -1,3 +1,5 @@
+//This file opens the game window. Also holds the version history.
+
 package actualminer;
 
 import javax.swing.JFrame;
@@ -6,10 +8,10 @@ public class ActualMiner {
 
     public static void main(String[] args) {
         
-        mineMan lalna = new mineMan();
-        lalna.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        lalna.setSize(1000, 1100);
-        lalna.setVisible(true);
+        mineMan miner = new mineMan();
+        miner.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        miner.setSize(1000, 1100); //Size of the window
+        miner.setVisible(true);
                       
     }
     
