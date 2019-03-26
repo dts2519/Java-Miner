@@ -1,3 +1,8 @@
+//Caution: Direct download of this application will not work without the associated image files.
+
+//In this game, the player is a miner, with the goal of reaching the bottom of the world and obtaining great riches.
+//The game uses JLabels as a tile system - when the player moves, the labels update with the stored tiles.
+
 package actualminer;
 
 import java.awt.Font;
@@ -35,11 +40,11 @@ import java.util.*; //Used: Random
 
 public class mineMan extends JFrame
 {
-    JLabel version = new JLabel("Java Miner - Beta 1.5.1");
+    JLabel version = new JLabel("Java Miner - Beta 1.5.1"); //Displayed in the upper left corner of the screen
     
     JLabel message = new JLabel("");
     
-    public static JButton inventory = new JButton("Inventory");
+    public static JButton inventory = new JButton("Inventory"); //Opens the player's inventory
     
     int[][] map = new int[100][100]; //Stores info for the entire map
     Boolean[][] minedFlag = new Boolean[100][100];
@@ -138,7 +143,7 @@ public class mineMan extends JFrame
     ImageIcon cloudGuySA = new ImageIcon(getClass().getResource("CloudGuySnowyAub.PNG"));
     ImageIcon minedGuyA = new ImageIcon(getClass().getResource("MinedGuyAub.PNG"));
     
-    //Shhhh
+    //This block deals with the miner using the mega aubrunium pickaxe, which is an easter egg
     ImageIcon skyGuyM = new ImageIcon(getClass().getResource("SkyGuyMega.PNG"));
     ImageIcon cloudGuyM = new ImageIcon(getClass().getResource("CloudGuyMega.PNG"));
     ImageIcon skyGuyCM = new ImageIcon(getClass().getResource("SkyGuyCloudyMega.PNG"));
@@ -159,7 +164,7 @@ public class mineMan extends JFrame
     ImageIcon uparrowR = new ImageIcon(getClass().getResource("GrassRainyArrow.PNG"));
     ImageIcon uparrowS = new ImageIcon(getClass().getResource("GrassSnowyArrow.PNG"));
     
-    //This block combines the shop and the miner
+    //This block combines the shop and the miner (no transparency system has been used in this game)
     ImageIcon shopGuy = new ImageIcon(getClass().getResource("ShopGuy.PNG"));
     ImageIcon shopGuyC = new ImageIcon(getClass().getResource("ShopGuyCloudy.PNG"));
     ImageIcon shopGuyR = new ImageIcon(getClass().getResource("ShopGuyRainy.PNG"));
@@ -172,28 +177,28 @@ public class mineMan extends JFrame
     ImageIcon shopGuyCA = new ImageIcon(getClass().getResource("ShopGuyCloudyAub.PNG"));
     ImageIcon shopGuyRA = new ImageIcon(getClass().getResource("ShopGuyRainyAub.PNG"));
     ImageIcon shopGuySA = new ImageIcon(getClass().getResource("ShopGuySnowyAub.PNG"));
-    //Shhhh
     ImageIcon shopGuyM = new ImageIcon(getClass().getResource("ShopGuyMega.PNG"));
     ImageIcon shopGuyCM = new ImageIcon(getClass().getResource("ShopGuyCloudyMega.PNG"));
     ImageIcon shopGuyRM = new ImageIcon(getClass().getResource("ShopGuyRainyMega.PNG"));
     ImageIcon shopGuySM = new ImageIcon(getClass().getResource("ShopGuySnowyMega.PNG"));
     
+    //These are the amount of ores the player has
     private static int coalGot = 0, copperGot = 0, ironGot = 0, silverGot = 0, goldGot = 0, diamondGot = 0, aubGot = 0, megaGot = 0;
     
     private static int cash = 0;
     
     private static int pickaxe = 1;
     
-    Boolean isMega = false;
-    Boolean movedFlag = false;
-    public static Boolean shopFlag = false;
+    Boolean isMega = false; //This becomes true if at least one mega aubrunium ore block has been generated
+    Boolean movedFlag = false; //This flag is used to display a message (if mega aubrunium has spawned)
+    public static Boolean shopFlag = false; //This flag is used to see if the shop is open or not
     
     public mineMan()
     {   
         super("Java Miner"); //Title of the window
         JPanel p = new JPanel();
         
-        p.setLayout(null);
+        p.setLayout(null); //Allows for manual placement of each element
         getContentPane().add(p); //Adds the panel to the window (all things are installed on the panel)
         
         version.setBounds(10, 10, 200, 40);
@@ -272,7 +277,7 @@ public class mineMan extends JFrame
                     revealedFlag[column][row] = false;
                 }
             }
-            else //column >= 90 - The bottom 10 layers could hold the incredibly valuable Aubrunium, and possibly another secret?! The most powerful pickaxe is required to get here
+            else //column >= 90 - The bottom 10 layers could hold the incredibly valuable Aubrunium, and possibly Mega Aubrunium. The most powerful pickaxe is required to get here
             {
                 for (int row = 0; row < 100; row++)
                 {
@@ -300,41 +305,41 @@ public class mineMan extends JFrame
         
         getGuy(4,4);
         
-        HandlerClass handoraa = new HandlerClass(); //Allows for key presses to move
-        addKeyListener(handoraa);
+        HandlerClass handler = new HandlerClass(); //Allows for key presses to move
+        addKeyListener(handler);
         
-        ButtonHandlerClass handoraa2 = new ButtonHandlerClass();
-        inventory.addActionListener(handoraa2);
+        ButtonHandlerClass handler2 = new ButtonHandlerClass();
+        inventory.addActionListener(handler2);
         
     }
     
     private class HandlerClass implements KeyListener //Both WSAD and arrow keys are allowed
     {
-        public void keyTyped(KeyEvent ebento) 
+        public void keyTyped(KeyEvent e) 
         {
             //Nothing
         }
 
-        public void keyPressed(KeyEvent ebento) 
+        public void keyPressed(KeyEvent e) 
         {
             //Nothing
         }
 
-        public void keyReleased(KeyEvent ebento) 
+        public void keyReleased(KeyEvent e) 
         {
-            if (ebento.getKeyCode() == KeyEvent.VK_LEFT || (ebento.getKeyCode() == KeyEvent.VK_A)) //Move left
+            if (e.getKeyCode() == KeyEvent.VK_LEFT || (e.getKeyCode() == KeyEvent.VK_A)) //Move left
             {
                 moveLeft(playerX, playerY);
             }
-            else if (ebento.getKeyCode() == KeyEvent.VK_RIGHT || (ebento.getKeyCode() == KeyEvent.VK_D)) //Move right
+            else if (e.getKeyCode() == KeyEvent.VK_RIGHT || (e.getKeyCode() == KeyEvent.VK_D)) //Move right
             {
                 moveRight(playerX, playerY);
             }
-            else if (ebento.getKeyCode() == KeyEvent.VK_UP || (ebento.getKeyCode() == KeyEvent.VK_W)) //Move up
+            else if (e.getKeyCode() == KeyEvent.VK_UP || (e.getKeyCode() == KeyEvent.VK_W)) //Move up
             {
                 moveUp(playerX, playerY);
             }
-            else if (ebento.getKeyCode() == KeyEvent.VK_DOWN || (ebento.getKeyCode() == KeyEvent.VK_S)) //Move down
+            else if (e.getKeyCode() == KeyEvent.VK_DOWN || (e.getKeyCode() == KeyEvent.VK_S)) //Move down
             {
                 moveDown(playerX, playerY);
             }
@@ -343,18 +348,18 @@ public class mineMan extends JFrame
     
     private class ButtonHandlerClass implements ActionListener
     {
-        public void actionPerformed(ActionEvent ebento) 
+        public void actionPerformed(ActionEvent e) 
         {
-            if (ebento.getSource() == inventory)
+            if (e.getSource() == inventory)
             {
                 inventory.setEnabled(false);
                 
-                mineInventory lolwa = new mineInventory();
-                lolwa.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                lolwa.setSize(450, 950);
-                lolwa.setVisible(true);
+                mineInventory inv = new mineInventory();
+                inv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                inv.setSize(450, 950);
+                inv.setVisible(true);
                 
-                lolwa.addWindowListener(new java.awt.event.WindowAdapter() //This allows the user to click either Close or the X to close the window
+                inv.addWindowListener(new java.awt.event.WindowAdapter() //This allows the user to click either Close or the X to close the window
                 {
                     public void windowClosing(java.awt.event.WindowEvent ebento)
                     {
@@ -459,29 +464,29 @@ public class mineMan extends JFrame
     {
         int decision = seeder.nextInt(800);
         
-        if (decision < 440) //Stone is again slightly less common 440
+        if (decision < 440) //Stone is again slightly less common
         {
             map[column][row] = 4; 
         }
         else if (decision < 560)
         {
-            map[column][row] = 5; //Coal is somewhat less common 120
+            map[column][row] = 5; //Coal is somewhat less common
         }
         else if (decision < 604)
         {
-            map[column][row] = 6; //Copper is a bit less common 44
+            map[column][row] = 6; //Copper is a bit less common
         }
         else if (decision < 680)
         {
-            map[column][row] = 7; //Iron is a bit less common 76
+            map[column][row] = 7; //Iron is a bit less common
         }
         else if (decision < 732)
         {
-            map[column][row] = 8; //Silver is as common 52
+            map[column][row] = 8; //Silver is as common
         }
         else if (decision < 776)
         {
-            map[column][row] = 9; //Gold is a bit more common 44
+            map[column][row] = 9; //Gold is a bit more common
         }
         else //decision >= 776
         {
@@ -492,46 +497,46 @@ public class mineMan extends JFrame
     {
         int decision = seeder.nextInt(3200);
         
-        if (decision < 1720) //Stone is again slightly less common 1720
+        if (decision < 1720) //Stone is again slightly less common
         {
             map[column][row] = 4; 
         }
         else if (decision < 2120)
         {
-            map[column][row] = 5; //Coal is less common 400
+            map[column][row] = 5; //Coal is less common
         }
         else if (decision < 2280)
         {
-            map[column][row] = 6; //Copper is a bit less common 160
+            map[column][row] = 6; //Copper is a bit less common
         }
         else if (decision < 2560)
         {
-            map[column][row] = 7; //Iron is a bit less common 280
+            map[column][row] = 7; //Iron is a bit less common
         }
         else if (decision < 2760)
         {
-            map[column][row] = 8; //Silver is a bit less common 200
+            map[column][row] = 8; //Silver is a bit less common
         }
         else if (decision < 2960)
         {
-            map[column][row] = 9; //Gold is a bit more common 100
+            map[column][row] = 9; //Gold is a bit more common
         }
         else if (decision < 3120)
         {
-            map[column][row] = 10; //Diamond is more common 160
+            map[column][row] = 10; //Diamond is more common
         }
         else if (decision < 3199)
         {
-            map[column][row] = 11; //Aubrunium, the rarest of all? 79
+            map[column][row] = 11; //Aubrunium, which is relatively rare
         }
         else //decision = 3199
         {
-            map[column][row] = 12; //No, there is one more - Mega Aubrunium! 1
-            isMega = true;
+            map[column][row] = 12; //Mega Aubrunium has a 1/3200 chance of spawning in any given block
+            isMega = true; //If one has been generated
         }
     }
-    
-    public void assign(int x, int y, int jx, int jy) //Takes the stored tile value in the map array and puts it onto the new tiles entering the player's vision corresponding to which label is being passed in
+    //Takes the stored tile value in the map array and puts it onto the new tiles entering the player's vision corresponding to which label is being passed in
+    public void assign(int x, int y, int jx, int jy) 
     {
         if (y > 99) //Layers under the actual map
         {
@@ -543,11 +548,11 @@ public class mineMan extends JFrame
             {
                 labelMap[jx][jy].setIcon(unknown);
             }
-            else
+            else //The tile has been revealed
             {
-                switch (map[y][x]) //The tile has been revealed
+                switch (map[y][x]) //The type of tile
                 {
-                    case 0:
+                    case 0: //Clear sky
                     {
                         switch(weather) //0 = Clear, 1 = Cloudy, 2 = Rainy, 3 = Snowy
                         {
@@ -574,7 +579,7 @@ public class mineMan extends JFrame
                         } 
                         break;
                     }
-                    case 1:
+                    case 1: //Cloudy sky
                     {
                         switch(weather) //0 = Clear, 1 = Cloudy, 2 = Rainy, 3 = Snowy
                         {
@@ -601,7 +606,7 @@ public class mineMan extends JFrame
                         } 
                         break;
                     }
-                    case 2:
+                    case 2: //Grass
                     {
                         switch(weather) //0 = Clear, 1 = Cloudy, 2 = Rainy, 3 = Snowy
                         {
@@ -628,12 +633,12 @@ public class mineMan extends JFrame
                         } 
                         break;
                     }
-                    case 3:
+                    case 3: //Dirt
                     {
                         labelMap[jx][jy].setIcon(dirt);
                         break;
                     }
-                    case 4:
+                    case 4: //Stone, no ore
                     {
                         if (y < 60)
                         {
@@ -649,7 +654,7 @@ public class mineMan extends JFrame
                         }
                         break;
                     }
-                    case 5:
+                    case 5: //Coal ore
                     {
                         if (y < 60)
                         {
@@ -665,7 +670,7 @@ public class mineMan extends JFrame
                         }
                         break;
                     }
-                    case 6:
+                    case 6: //Copper ore
                     {
                         if (y < 60)
                         {
@@ -681,7 +686,7 @@ public class mineMan extends JFrame
                         }
                         break;
                     }
-                    case 7:
+                    case 7: //Iron ore
                     {
                         if (y < 60)
                         {
@@ -697,7 +702,7 @@ public class mineMan extends JFrame
                         }
                         break;
                     }
-                    case 8:
+                    case 8: //Silver ore
                     {
                         if (y < 60) //Of course bear in mind that it doesn't go to the surface
                         {
@@ -713,7 +718,7 @@ public class mineMan extends JFrame
                         }
                         break;
                     }
-                    case 9:
+                    case 9: //Gold ore
                     {
                         if (y < 90)
                         {
@@ -725,7 +730,7 @@ public class mineMan extends JFrame
                         }
                         break;
                     }
-                    case 10:
+                    case 10: //Diamond ore
                     {
                         if (y < 90)
                         {
@@ -737,17 +742,17 @@ public class mineMan extends JFrame
                         }
                         break;
                     }
-                    case 11:
+                    case 11: //Aubrunium ore
                     {
                         labelMap[jx][jy].setIcon(aubrunium); //Only appears with the stone3 background
                         break;
                     }
-                    case 12:
+                    case 12: //Mega Aubrunium ore
                     {
                         labelMap[jx][jy].setIcon(mega); //Only appears with the stone3 background
                         break;
                     }           
-                    case 13:
+                    case 13: //Bedrock
                     {
                         labelMap[jx][jy].setIcon(bedrock); //Unbreakable
                         break;
@@ -816,18 +821,18 @@ public class mineMan extends JFrame
         }
     }
     
-    //That's right folks, we've got three layers of switch statements.
+    //Sets the label the player is on depending on the location on the map
     public void getGuy(int y, int x)
     {
-        switch(map[y][x])
+        switch(map[y][x]) //This is the type of tile the player is on
         {
-            case 0:
+            case 0: //Clear sky
             {
                 switch (weather) //0 = Clear, 1 = Cloudy, 2 = Rainy, 3 = Snowy
                 {
                     case 0:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -844,7 +849,6 @@ public class mineMan extends JFrame
                                 labelMap[4][4].setIcon(skyGuyA); 
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[4][4].setIcon(skyGuyM); 
@@ -855,7 +859,7 @@ public class mineMan extends JFrame
                     }
                     case 1:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -872,7 +876,6 @@ public class mineMan extends JFrame
                                 labelMap[4][4].setIcon(skyGuyCA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[4][4].setIcon(skyGuyCM);
@@ -883,7 +886,7 @@ public class mineMan extends JFrame
                     }
                     case 2:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -900,7 +903,6 @@ public class mineMan extends JFrame
                                 labelMap[4][4].setIcon(skyGuyRA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[4][4].setIcon(skyGuyRM);
@@ -911,7 +913,7 @@ public class mineMan extends JFrame
                     }
                     case 3:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -928,7 +930,6 @@ public class mineMan extends JFrame
                                 labelMap[4][4].setIcon(skyGuySA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[4][4].setIcon(skyGuySM);
@@ -940,13 +941,13 @@ public class mineMan extends JFrame
                 }
                 break;
             } 
-            case 1:
+            case 1: //Cloudy sky
             {
                 switch (weather) //0 = Clear, 1 = Cloudy, 2 = Rainy, 3 = Snowy
                 {
                     case 0:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -963,7 +964,6 @@ public class mineMan extends JFrame
                                 labelMap[4][4].setIcon(cloudGuyA); 
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[4][4].setIcon(cloudGuyM); 
@@ -974,7 +974,7 @@ public class mineMan extends JFrame
                     }
                     case 1:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -991,7 +991,6 @@ public class mineMan extends JFrame
                                 labelMap[4][4].setIcon(cloudGuyCA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[4][4].setIcon(cloudGuyCM);
@@ -1002,7 +1001,7 @@ public class mineMan extends JFrame
                     }
                     case 2:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -1019,7 +1018,6 @@ public class mineMan extends JFrame
                                 labelMap[4][4].setIcon(cloudGuyRA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[4][4].setIcon(cloudGuyRM);
@@ -1030,7 +1028,7 @@ public class mineMan extends JFrame
                     }
                     case 3:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -1047,7 +1045,6 @@ public class mineMan extends JFrame
                                 labelMap[4][4].setIcon(cloudGuySA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[4][4].setIcon(cloudGuySM);
@@ -1065,7 +1062,7 @@ public class mineMan extends JFrame
                 {
                     case 0:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -1082,7 +1079,6 @@ public class mineMan extends JFrame
                                 labelMap[4][4].setIcon(shopGuyA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[4][4].setIcon(shopGuyM);
@@ -1093,7 +1089,7 @@ public class mineMan extends JFrame
                     }
                     case 1:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -1110,7 +1106,6 @@ public class mineMan extends JFrame
                                 labelMap[4][4].setIcon(shopGuyCA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[4][4].setIcon(shopGuyCM);
@@ -1121,7 +1116,7 @@ public class mineMan extends JFrame
                     }
                     case 2:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -1138,7 +1133,6 @@ public class mineMan extends JFrame
                                 labelMap[4][4].setIcon(shopGuyRA); 
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[4][4].setIcon(shopGuyRM); 
@@ -1150,7 +1144,7 @@ public class mineMan extends JFrame
                     }
                     case 3:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -1167,7 +1161,6 @@ public class mineMan extends JFrame
                                 labelMap[4][4].setIcon(shopGuySA); 
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[4][4].setIcon(shopGuySM); 
@@ -1182,7 +1175,7 @@ public class mineMan extends JFrame
             }       
             default: //Any other value
             {
-                switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                 {
                     case 1:
                     {
@@ -1199,7 +1192,6 @@ public class mineMan extends JFrame
                         labelMap[4][4].setIcon(minedGuyA);
                         break;
                     }
-                    //Shhhh
                     case 4:
                     {
                         labelMap[4][4].setIcon(minedGuyM);
@@ -1211,18 +1203,18 @@ public class mineMan extends JFrame
         }
     }
     
-    //That's right folks, we've got three layers of switch statements.
+    //Sets the label the player is on depending on the location on the map
     public void getGuyEdgeLeft(int y, int x)
     {   
-        switch (map[y][x])
+        switch (map[y][x]) //The type of tile
         {
-            case 0:
+            case 0: //Clear sky
             {
                 switch (weather) //0 = Clear, 1 = Cloudy, 2 = Rainy, 3 = Snowy
                 {
                     case 0:
                     {
-                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                        {
                            case 1:
                            {
@@ -1239,7 +1231,6 @@ public class mineMan extends JFrame
                                labelMap[x][4].setIcon(skyGuyA); 
                                break;
                            }
-                           //Shhhh
                            case 4:
                            {
                                labelMap[x][4].setIcon(skyGuyM); 
@@ -1250,7 +1241,7 @@ public class mineMan extends JFrame
                     }
                     case 1:
                     {
-                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                        {
                            case 1:
                            {
@@ -1267,7 +1258,7 @@ public class mineMan extends JFrame
                                labelMap[x][4].setIcon(skyGuyCA);
                                break;
                            }
-                           //Shhhh
+ 
                            case 4:
                            {
                                labelMap[x][4].setIcon(skyGuyCM);
@@ -1278,7 +1269,7 @@ public class mineMan extends JFrame
                     }
                     case 2:
                     {
-                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                        {
                            case 1:
                            {
@@ -1295,7 +1286,6 @@ public class mineMan extends JFrame
                                labelMap[x][4].setIcon(skyGuyRA);
                                break;
                            }
-                           //Shhhh
                            case 4:
                            {
                                labelMap[x][4].setIcon(skyGuyRM);
@@ -1306,7 +1296,7 @@ public class mineMan extends JFrame
                     }
                     case 3:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -1323,7 +1313,6 @@ public class mineMan extends JFrame
                                 labelMap[x][4].setIcon(skyGuySA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[x][4].setIcon(skyGuySM);
@@ -1335,13 +1324,13 @@ public class mineMan extends JFrame
                 } 
                 break;
             }            
-            case 1:
+            case 1: //Cloudy sky
             {
                 switch (weather) //0 = Clear, 1 = Cloudy, 2 = Rainy, 3 = Snowy
                 {
                     case 0:
                     {
-                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                        {
                            case 1:
                            {
@@ -1358,7 +1347,6 @@ public class mineMan extends JFrame
                                labelMap[x][4].setIcon(cloudGuyA);
                                break;
                            }
-                           //Shhhh
                            case 4:
                            {
                                labelMap[x][4].setIcon(cloudGuyM);
@@ -1369,7 +1357,7 @@ public class mineMan extends JFrame
                     }
                     case 1:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -1386,7 +1374,6 @@ public class mineMan extends JFrame
                                 labelMap[x][4].setIcon(cloudGuyCA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[x][4].setIcon(cloudGuyCM);
@@ -1397,7 +1384,7 @@ public class mineMan extends JFrame
                     }
                     case 2:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -1414,7 +1401,6 @@ public class mineMan extends JFrame
                                 labelMap[x][4].setIcon(cloudGuyRA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[x][4].setIcon(cloudGuyRM);
@@ -1425,7 +1411,7 @@ public class mineMan extends JFrame
                     }
                     case 3:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -1442,7 +1428,6 @@ public class mineMan extends JFrame
                                 labelMap[x][4].setIcon(cloudGuySA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[x][4].setIcon(cloudGuySM);
@@ -1456,7 +1441,7 @@ public class mineMan extends JFrame
             }
             default: //Everything else
             {   
-                switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                 {
                     case 1:
                     {
@@ -1473,7 +1458,6 @@ public class mineMan extends JFrame
                         labelMap[x][4].setIcon(minedGuyA);
                         break;
                     }
-                    //Shhhh
                     case 4:
                     {
                         labelMap[x][4].setIcon(minedGuyM);
@@ -1486,18 +1470,18 @@ public class mineMan extends JFrame
     }
     
     
-    //That's right folks, we've got three layers of switch statements.
+    //Sets the label the player is on depending on the location on the map
     public void getGuyEdgeRight(int y, int x)
     {   
-        switch (map[y][x])
+        switch (map[y][x]) //The type of tile
         {
-            case 0:
+            case 0: //Clear sky
             {
                 switch (weather) //0 = Clear, 1 = Cloudy, 2 = Rainy, 3 = Snowy
                 {
                     case 0:
                     {
-                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                        switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                         {
                             case 1:
                             {
@@ -1514,7 +1498,6 @@ public class mineMan extends JFrame
                                 labelMap[x - 91][4].setIcon(skyGuyA);
                                 break;
                             }
-                            //Shhhh
                             case 4:
                             {
                                 labelMap[x - 91][4].setIcon(skyGuyM);
@@ -1525,7 +1508,7 @@ public class mineMan extends JFrame
                     }
                     case 1:
                     {
-                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                        {
                            case 1:
                            {
@@ -1542,7 +1525,6 @@ public class mineMan extends JFrame
                                labelMap[x - 91][4].setIcon(skyGuyCA);
                                break;
                            }
-                           //Shhhh
                            case 4:
                            {
                                labelMap[x - 91][4].setIcon(skyGuyCM);
@@ -1553,7 +1535,7 @@ public class mineMan extends JFrame
                     }
                     case 2:
                     {
-                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                        {
                            case 1:
                            {
@@ -1570,7 +1552,6 @@ public class mineMan extends JFrame
                                labelMap[x - 91][4].setIcon(skyGuyRA);
                                break; 
                            }
-                           //Shhhh
                            case 4:
                            {
                                labelMap[x - 91][4].setIcon(skyGuyRM);
@@ -1581,7 +1562,7 @@ public class mineMan extends JFrame
                     }
                     case 3:
                     {
-                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                        {
                            case 1: 
                            {
@@ -1598,7 +1579,6 @@ public class mineMan extends JFrame
                                labelMap[x - 91][4].setIcon(skyGuySA);
                                break;
                            }
-                           //Shhhh
                            case 4: 
                            {
                                labelMap[x - 91][4].setIcon(skyGuySM);
@@ -1611,13 +1591,13 @@ public class mineMan extends JFrame
                 
                 break;
             }            
-            case 1:
+            case 1: //Cloudy sky
             {
                 switch (weather) //0 = Clear, 1 = Cloudy, 2 = Rainy, 3 = Snowy
                 {
                     case 0:
                     {
-                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                        {
                            case 1:
                            {
@@ -1634,7 +1614,6 @@ public class mineMan extends JFrame
                                labelMap[x - 91][4].setIcon(cloudGuyA);
                                break;
                            }
-                           //Shhhh
                            case 4:
                            {
                                labelMap[x - 91][4].setIcon(cloudGuyM);
@@ -1645,7 +1624,7 @@ public class mineMan extends JFrame
                     }
                     case 1:
                     {
-                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                        {
                            case 1:
                            {
@@ -1662,7 +1641,6 @@ public class mineMan extends JFrame
                                labelMap[x - 91][4].setIcon(cloudGuyCA);
                                break;
                            }
-                           //Shhhh
                            case 4:
                            {
                                labelMap[x - 91][4].setIcon(cloudGuyCM);
@@ -1673,7 +1651,7 @@ public class mineMan extends JFrame
                     }
                     case 2:
                     {
-                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                        {
                            case 1:
                            {
@@ -1690,7 +1668,6 @@ public class mineMan extends JFrame
                                labelMap[x - 91][4].setIcon(cloudGuyRA);
                                break;
                            }
-                           //Shhhh
                            case 4:
                            {
                                labelMap[x - 91][4].setIcon(cloudGuyRM);
@@ -1701,7 +1678,7 @@ public class mineMan extends JFrame
                     }
                     case 3:
                     {
-                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                       switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                        {
                            case 1:
                            {
@@ -1718,7 +1695,6 @@ public class mineMan extends JFrame
                                labelMap[x - 91][4].setIcon(cloudGuySA);
                                break;
                            }
-                           //Shhhh
                            case 4:
                            {
                                labelMap[x - 91][4].setIcon(cloudGuySM);
@@ -1732,7 +1708,7 @@ public class mineMan extends JFrame
             }
             default: //Everything else
             {     
-                switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), (*whispers*) 4 = Mega Aubrunium (M)
+                switch (pickaxe) //1 = Default, 2 = Diamond (D), 3 = Aubrunium (A), 4 = Mega (M)
                 {
                     case 1:
                     {
@@ -1749,7 +1725,6 @@ public class mineMan extends JFrame
                        labelMap[x - 91][4].setIcon(minedGuyA);
                        break; 
                     }
-                    //Shhhh
                     case 4:
                     {
                        labelMap[x - 91][4].setIcon(minedGuyM);
@@ -1763,20 +1738,21 @@ public class mineMan extends JFrame
     
     public void moveLeft(int x, int y)
     {
-        if (x == 51 && y == 5) //The block directly to the right of the shop's up arrow
+        if (x == 51 && y == 5) //The block directly to the right of the shop's up arrow, which cannot be broken
         {
             //Nothing
         }
-        else if (shopFlag == false)
+        else if (shopFlag == false) //The player is not in the shop
         {
             if (playerX != 0) //That is, the player is not on the left edge
             {           
-                playerX--;
+                playerX--; //Then move the player left
                 x--; 
             }
         
             checkRevealed(y, x);
         
+            //This block updates the labels depending on where the player is. The labels update differently if the player is at the left or right side of the map
             if (x < 4)
             {
                 updateLabels(4, y);
@@ -1803,10 +1779,10 @@ public class mineMan extends JFrame
                 map[y][x] = -1;
             }
             
-            if (movedFlag == false)
+            if (movedFlag == false) //On the first move, if a Mega Aubrunium has been generated, the player receives this cryptic message
             {
                 movedFlag = true;
-                if (isMega == true)
+                if (isMega)
                 {
                     JOptionPane.showMessageDialog(null, String.format("This region seems to be affected by a powerful magic..."));
                 }
@@ -1816,20 +1792,21 @@ public class mineMan extends JFrame
     
     public void moveRight(int x, int y)
     {
-        if (x == 49 && y == 5) //The block directly to the left of the shop's up arrow
+        if (x == 49 && y == 5) //The block directly to the left of the shop's up arrow, which cannot be broken
         {
             //Nothing
         }
-        else if (shopFlag == false)
+        else if (shopFlag == false) //The player is not in the shop
         {
             if (playerX != 99) //That is, the player is not on the right edge
             {
-                playerX++;
+                playerX++; //Then move the player right
                 x++; 
             }
         
             checkRevealed(y, x);
         
+            //This block updates the labels depending on where the player is. The labels update differently if the player is at the left or right side of the map
             if (x < 4)
             {
                 updateLabels(4, y);
@@ -1856,7 +1833,7 @@ public class mineMan extends JFrame
                 map[y][x] = -1;
             }
             
-            if (movedFlag == false)
+            if (movedFlag == false) //On the first move, if a Mega Aubrunium has been generated, the player receives this cryptic message
             {
                 movedFlag = true;
                 if (isMega == true)
@@ -1869,27 +1846,27 @@ public class mineMan extends JFrame
     
     public void moveUp(int x, int y)
     {
-        if (x == 50 && y == 6) //The block directly below the shop's up arrow
+        if (x == 50 && y == 6) //The block directly below the shop's up arrow, which cannot be broken
         {
             //Nothing
         }
-        else if (shopFlag == false)
+        else if (shopFlag == false) //The player is not in the shop
         {
             if (y == 4)
             {
-                if (x == 50)
+                if (x == 50) //The player is at the shop. Hitting up enters the shop
                 {
                     shopFlag = true;
                     mineMan.inventory.setEnabled(false);
                     
-                    mineShop lelda = new mineShop();
-                    lelda.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    lelda.setSize(875, 950);
-                    lelda.setVisible(true);
+                    mineShop shop = new mineShop();
+                    shop.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    shop.setSize(875, 950);
+                    shop.setVisible(true);
                     
-                    lelda.addWindowListener(new java.awt.event.WindowAdapter() //This allows the user to click either Close or the X to close the window
+                    shop.addWindowListener(new java.awt.event.WindowAdapter() //This allows the user to click either Close or the X to close the window
                     {
-                        public void windowClosing(java.awt.event.WindowEvent ebento)
+                        public void windowClosing(java.awt.event.WindowEvent e)
                         {
                             shopFlag = false;
                             inventory.setEnabled(true);
@@ -1898,16 +1875,17 @@ public class mineMan extends JFrame
                 }
                 else
                 {
-                    //Nothing
+                    //Nothing - the player cannot move above the ground
                 }
             }
             else
             {
-                playerY--;
+                playerY--; //Then move the player up
                 y--;
             
                 checkRevealed(y, x);
             
+                //This block updates the labels depending on where the player is. The labels update differently if the player is at the left or right side of the map
                 if (x < 4)
                 {
                     updateLabels(4, y);
@@ -1939,24 +1917,25 @@ public class mineMan extends JFrame
     
     public void moveDown(int x, int y)
     {
-        if (x == 50 && y == 4) //The shop, which is directly above the up arrow
+        if (x == 50 && y == 4) //The shop, which is directly above the up arrow, which cannot be broken
         {
             //Nothing
         }
         //This clause does three things: 1. Prevents the player from moving in the shop; 2. Checks depth; 3. Checks pickaxe
         else if (shopFlag == false && (y < 59 || (y < 89 && pickaxe > 1) || pickaxe > 2))
         {
-            if (y == 99)
+            if (y == 99) //The player is at bedrock
             {
                 //Nothing
             }
             else
             {   
-                playerY++;
+                playerY++; //Then move the player down
                 y++;
             
                 checkRevealed(y, x);
             
+                //This block updates the labels depending on where the player is. The labels update differently if the player is at the left or right side of the map
                 if (x < 4)
                 {
                     updateLabels(4, y);
@@ -2072,6 +2051,7 @@ public class mineMan extends JFrame
         }
     }
     
+    //As the player moves, this lights up an area around the player so that the ore can be seen
     public void checkRevealed(int y, int x)
     {
         for (int c = y - 1; c < y + 2; c++)
@@ -2092,6 +2072,7 @@ public class mineMan extends JFrame
         }
     }
     
+    //Encapsulation at its most staticky
     public static int getCoal()
     {
         return coalGot;
