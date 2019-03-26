@@ -1,3 +1,5 @@
+//This window contains the shop, where the player sells the ores and purchases new pickaxes
+
 package actualminer;
 
 import java.awt.Font;
@@ -37,6 +39,7 @@ public class mineShop extends JFrame
     JLabel nextPickaxe = new JLabel();
     JLabel nextPickaxeCost = new JLabel("");
     
+    //The player can sell ore one at a time or in packs of 5 (why there is no Sell All button I have no clue)
     JButton coal1 = new JButton("Sell 1");
     JButton coal5 = new JButton("Sell 5");
     
@@ -68,9 +71,9 @@ public class mineShop extends JFrame
     ImageIcon pickaxe = new ImageIcon(getClass().getResource("Pickaxe.PNG")); 
     ImageIcon pickaxeD = new ImageIcon(getClass().getResource("DiamondPickaxe.PNG"));
     ImageIcon pickaxeA = new ImageIcon(getClass().getResource("AubruniumPickaxe.PNG"));
-    ImageIcon pickaxeN = new ImageIcon(getClass().getResource("GrayPickaxe.PNG"));
-    //Shhhh
+    ImageIcon pickaxeN = new ImageIcon(getClass().getResource("GrayPickaxe.PNG")); //I.e. no new pickaxe available
     ImageIcon pickaxeM = new ImageIcon(getClass().getResource("MegaAubruniumPickaxe.PNG"));
+    
     ImageIcon arrow = new ImageIcon(getClass().getResource("PickaxeArrow.PNG"));
     
     private int pickaxeCost;
@@ -80,7 +83,7 @@ public class mineShop extends JFrame
         super("Shop"); //Title of the window
         JPanel p = new JPanel();
         
-        p.setLayout(null);
+        p.setLayout(null); //Allows for manual placement of each element
         getContentPane().add(p); //Adds the panel to the window (all things are installed on the panel)
         
         title.setFont(new Font("Sans Serif", Font.PLAIN, 22));
@@ -154,7 +157,7 @@ public class mineShop extends JFrame
         amount11.setBounds(250, 650, 100, 100);
         p.add(amount11);
         
-        if (mineMan.getMega() > 0)
+        if (mineMan.getMega() > 0) //Only visible if the player possesses at least one unit of mega aubrunium
         {
             display12.setText("Mega Aubrunium Ore");        
             amount12.setText("" + mineMan.getMega());
@@ -162,12 +165,12 @@ public class mineShop extends JFrame
             amount12.setBounds(250, 750, 100, 100);
             p.add(amount12);  
             
-            mega1.setBounds(350, 770, 140, 60);
+            mega1.setBounds(350, 770, 140, 60); //Mega aubrunium can only be sold one at a time
             p.add(mega1);
             
-            if (mineMan.getPickaxe() == 3)
+            if (mineMan.getPickaxe() == 3) //The player possesses the aubrunium pickaxe...
             {
-                buyPickaxe.setEnabled(true);
+                buyPickaxe.setEnabled(true); //...which allows for the player to upgrade to the 'secret' mega aubrunium pickaxe
             }
         }
         
@@ -244,7 +247,7 @@ public class mineShop extends JFrame
             }
             case 3:
             {
-                pickaxeCost = 7777777;
+                pickaxeCost = 7777777; //I.e. It is nigh impossible for the player to purchase it
                 currentPickaxe.setIcon(pickaxeA);
                 nextPickaxe.setIcon(pickaxeN);
                 
@@ -253,7 +256,7 @@ public class mineShop extends JFrame
             }
             case 4:
             {
-                currentPickaxe.setIcon(pickaxeM);
+                currentPickaxe.setIcon(pickaxeM); //No more pickaxes after mega aubrunium
                 nextPickaxe.setIcon(pickaxeN);
                 break;
             }
@@ -265,7 +268,7 @@ public class mineShop extends JFrame
         nextPickaxe.setBounds(700, 795, 100, 100);
         p.add(nextPickaxe);
         
-        if (mineMan.getPickaxe() < 3)
+        if (mineMan.getPickaxe() < 3) //A better pickaxe is available and so has a cost
         {
             nextPickaxeCost.setText("Cost: " + pickaxeCost);
         }
@@ -280,44 +283,44 @@ public class mineShop extends JFrame
         close.setBounds(50, 825, 100, 50);
         p.add(close);
         
-        shopHandlerClass handoraa2 = new shopHandlerClass();
-        coal1.addActionListener(handoraa2);
-        coal5.addActionListener(handoraa2);
-        copper1.addActionListener(handoraa2);
-        copper5.addActionListener(handoraa2);
-        iron1.addActionListener(handoraa2);
-        iron5.addActionListener(handoraa2);
-        silver1.addActionListener(handoraa2);
-        silver5.addActionListener(handoraa2);
-        gold1.addActionListener(handoraa2);
-        gold5.addActionListener(handoraa2);
-        diamond1.addActionListener(handoraa2);
-        diamond5.addActionListener(handoraa2);
-        aub1.addActionListener(handoraa2);
-        aub5.addActionListener(handoraa2);
-        mega1.addActionListener(handoraa2);
+        shopHandlerClass handler2 = new shopHandlerClass();
+        coal1.addActionListener(handler2);
+        coal5.addActionListener(handler2);
+        copper1.addActionListener(handler2);
+        copper5.addActionListener(handler2);
+        iron1.addActionListener(handler2);
+        iron5.addActionListener(handler2);
+        silver1.addActionListener(handler2);
+        silver5.addActionListener(handler2);
+        gold1.addActionListener(handler2);
+        gold5.addActionListener(handler2);
+        diamond1.addActionListener(handler2);
+        diamond5.addActionListener(handler2);
+        aub1.addActionListener(handler2);
+        aub5.addActionListener(handler2);
+        mega1.addActionListener(handler2);
         
-        buyPickaxe.addActionListener(handoraa2);
+        buyPickaxe.addActionListener(handler2);
         
-        close.addActionListener(handoraa2);
+        close.addActionListener(handler2);
     }
         
-    private class shopHandlerClass implements ActionListener
+    private class shopHandlerClass implements ActionListener //A button is pressed
     {
-        public void actionPerformed(ActionEvent ebento)
+        public void actionPerformed(ActionEvent e)
         {
-            if (ebento.getSource() == coal1)
+            if (e.getSource() == coal1) //Sells 1 coal, provided the player has at least one
             {
                 if (mineMan.getCoal() > 0)
                 {
                     mineMan.setCoal(mineMan.getCoal() - 1);
                     amount5.setText("" + mineMan.getCoal());
                     
-                    mineMan.setCash(mineMan.getCash() + 7);
+                    mineMan.setCash(mineMan.getCash() + 7); //Each coal is worth 7 cash
                     displayCash.setText("Cash: " + mineMan.getCash());
                 }
             }           
-            else if (ebento.getSource() == coal5)
+            else if (e.getSource() == coal5) //Sells 5 coal, provided the player has enough
             {
                 if (mineMan.getCoal() > 4)
                 {
@@ -329,18 +332,18 @@ public class mineShop extends JFrame
                 }
             }
             
-            else if (ebento.getSource() == copper1)
+            else if (e.getSource() == copper1) //Sells 1 copper...
             {
                 if (mineMan.getCopper() > 0)
                 {
                     mineMan.setCopper(mineMan.getCopper() - 1);
                     amount6.setText("" + mineMan.getCopper());
                     
-                    mineMan.setCash(mineMan.getCash() + 10);
+                    mineMan.setCash(mineMan.getCash() + 10); //Each copper is worth 10 cash
                     displayCash.setText("Cash: " + mineMan.getCash());
                 }
             }
-            else if (ebento.getSource() == copper5)
+            else if (e.getSource() == copper5) //Sells 5 copper...
             {
                 if (mineMan.getCopper() > 4)
                 {
@@ -352,18 +355,18 @@ public class mineShop extends JFrame
                 }
             }
             
-            else if (ebento.getSource() == iron1)
+            else if (e.getSource() == iron1) //Etc.
             {
                 if (mineMan.getIron() > 0)
                 {
                     mineMan.setIron(mineMan.getIron() - 1);
                     amount7.setText("" + mineMan.getIron());
                     
-                    mineMan.setCash(mineMan.getCash() + 15);
+                    mineMan.setCash(mineMan.getCash() + 15); //Iron is 15
                     displayCash.setText("Cash: " + mineMan.getCash());
                 }
             }
-            else if (ebento.getSource() == iron5)
+            else if (e.getSource() == iron5) //Etc.
             {
                 if (mineMan.getIron() > 4)
                 {
@@ -375,18 +378,18 @@ public class mineShop extends JFrame
                 }
             }
             
-            else if (ebento.getSource() == silver1)
+            else if (e.getSource() == silver1)
             {
                 if (mineMan.getSilver() > 0)
                 {
                     mineMan.setSilver(mineMan.getSilver() - 1);
                     amount8.setText("" + mineMan.getSilver());
                     
-                    mineMan.setCash(mineMan.getCash() + 25);
+                    mineMan.setCash(mineMan.getCash() + 25); //Silver is 25
                     displayCash.setText("Cash: " + mineMan.getCash());
                 }
             }
-            else if (ebento.getSource() == silver5)
+            else if (e.getSource() == silver5)
             {
                 if (mineMan.getSilver() > 4)
                 {
@@ -398,18 +401,18 @@ public class mineShop extends JFrame
                 }
             }
             
-            else if (ebento.getSource() == gold1)
+            else if (e.getSource() == gold1)
             {
                 if (mineMan.getGold() > 0)
                 {
                     mineMan.setGold(mineMan.getGold() - 1);
                     amount9.setText("" + mineMan.getGold());
                     
-                    mineMan.setCash(mineMan.getCash() + 45);
+                    mineMan.setCash(mineMan.getCash() + 45); //Gold is 45
                     displayCash.setText("Cash: " + mineMan.getCash());
                 }
             }
-            else if (ebento.getSource() == gold5)
+            else if (e.getSource() == gold5)
             {
                 if (mineMan.getGold() > 4)
                 {
@@ -421,18 +424,18 @@ public class mineShop extends JFrame
                 }
             }
             
-            else if (ebento.getSource() == diamond1)
+            else if (e.getSource() == diamond1)
             {
                 if (mineMan.getDiamond() > 0)
                 {
                     mineMan.setDiamond(mineMan.getDiamond() - 1);
                     amount10.setText("" + mineMan.getDiamond());
                     
-                    mineMan.setCash(mineMan.getCash() + 80);
+                    mineMan.setCash(mineMan.getCash() + 80); //Diamond is 80
                     displayCash.setText("Cash: " + mineMan.getCash());
                 }
             }
-            else if (ebento.getSource() == diamond5)
+            else if (e.getSource() == diamond5)
             {
                 if (mineMan.getDiamond() > 4)
                 {
@@ -444,18 +447,18 @@ public class mineShop extends JFrame
                 }
             }
             
-            else if (ebento.getSource() == aub1)
+            else if (e.getSource() == aub1)
             {
                 if (mineMan.getAub() > 0)
                 {
                     mineMan.setAub(mineMan.getAub() - 1);
                     amount11.setText("" + mineMan.getAub());
                     
-                    mineMan.setCash(mineMan.getCash() + 140);
+                    mineMan.setCash(mineMan.getCash() + 140); //Aubrunium is 140
                     displayCash.setText("Cash: " + mineMan.getCash());
                 }
             }
-            else if (ebento.getSource() == aub5)
+            else if (e.getSource() == aub5)
             {
                 if (mineMan.getAub() > 4)
                 {
@@ -467,25 +470,25 @@ public class mineShop extends JFrame
                 }
             }
             
-            else if (ebento.getSource() == mega1)
+            else if (e.getSource() == mega1)
             {
                 if (mineMan.getMega() > 0)
                 {
                     mineMan.setMega(mineMan.getMega() - 1);
                     amount12.setText("" + mineMan.getMega());
                     
-                    mineMan.setCash(mineMan.getCash() + 1000);
+                    mineMan.setCash(mineMan.getCash() + 1000); //Mega Aubrunium is 1000, but the player most likely loses out on getting the secret pickaxe
                     displayCash.setText("Cash: " + mineMan.getCash());
                 }
             }
             
-            else if (ebento.getSource() == buyPickaxe)
+            else if (e.getSource() == buyPickaxe) //This button purchases the next pickaxe, if available
             {
-                if (mineMan.getCash() >= pickaxeCost && mineMan.getPickaxe() < 3)
+                if (mineMan.getCash() >= pickaxeCost && mineMan.getPickaxe() < 3) //The player has enough cash and does not have the best pickaxe
                 {
-                    mineMan.setPickaxe(mineMan.getPickaxe() + 1);
+                    mineMan.setPickaxe(mineMan.getPickaxe() + 1); //Then gets the next pickaxe...
                     
-                    if (mineMan.getPickaxe() == 2)
+                    if (mineMan.getPickaxe() == 2) //...and the pickaxe upgrade window updates to reflect that
                     {
                         mineMan.setCash(mineMan.getCash() - pickaxeCost);
                         pickaxeCost = 7000;
@@ -504,22 +507,23 @@ public class mineShop extends JFrame
                         nextPickaxe.setIcon(pickaxeN);
                     }
                 }
-                else if (mineMan.getPickaxe() == 3) //Shhhh
+                else if (mineMan.getPickaxe() == 3) //If the player has the aubrunium pickaxe...
                 {
-                    if (mineMan.getMega() > 0)
+                    if (mineMan.getMega() > 0) //...and has at least one mega aubrunium...
                     {
                         buyPickaxe.setEnabled(false);
-                        mineMan.setPickaxe(4);
+                        mineMan.setPickaxe(4); //The player 'forges' the mega aubrunium pickaxe
                         mineMan.setMega(mineMan.getMega() - 1);
                         currentPickaxe.setIcon(pickaxeM);
                     }
-                    else
+                    else //I don't think this ever happens, but it is here as a failsafe
                     {
                         buyPickaxe.setEnabled(false);
                     }
                 }
             }
             
+                //After the transaction, updates the labels with the new amount of ore
                 amount5.setText("" + mineMan.getCoal());
                 amount6.setText("" + mineMan.getCopper());
                 amount7.setText("" + mineMan.getIron());
@@ -529,7 +533,7 @@ public class mineShop extends JFrame
                 amount11.setText("" + mineMan.getAub());
                 amount12.setText("" + mineMan.getMega());
                                                 
-            if (ebento.getSource() == close)
+            if (e.getSource() == close) //Closes the shop and re-enables the buttons in the main window
             {
                 mineMan.shopFlag = false;
                 mineMan.inventory.setEnabled(true);
